@@ -3,24 +3,50 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{modules/layout :: html(header = null, content = ~{::content}, footer = null)}"
 >
-  <th:block th:fragment="content">
-    <div class="post">
-      <h1 class="post-title" th:text="${singlePage.spec.title}">Post Title</h1>
-      <div class="post-meta">
-        <span class="post-date" th:text="${#dates.format(singlePage.spec.publishTime,'yyyy-MM-dd')}">
+<th:block th:fragment="content">
+  <div class="single-page">
+    <!-- Display the cover image -->
+    <img th:src="${singlePage.spec.cover}" alt="Page Cover" class="page-cover"/>
+
+    <h1 class="page-title" th:text="${singlePage.spec.title}">Page Title</h1>
+
+    <!-- Meta Information -->
+    <div class="page-meta">
+        <span class="page-date" th:text="${#dates.format(singlePage.spec.publishTime,'yyyy-MM-dd')}">
           publishTime
         </span>
-        <span class="post-author" th:text="${':: '+singlePage.owner.displayName}">:: Author</span>
-      </div>
-      <div class="post-content">
-        <div th:utext="${singlePage.content.content}">Post Content</div>
-      </div>
+      <span class="page-author" th:text="${':: '+singlePage.owner.displayName}">:: Author</span>
     </div>
-    <halo:comment
-      group="content.halo.run"
-      kind="SinglePage"
-      th:attr="name=${singlePage.metadata.name}"
-      colorScheme="document.documentElement.getAttribute('data-theme')"
-    />
-  </th:block>
+
+    <!-- Content -->
+    <div class="page-content">
+      <div th:utext="${singlePage.content.content}">Page Content</div>
+    </div>
+
+    <!-- Contributors (Assuming a single page can have multiple contributors) -->
+    <div class="page-contributors">
+      <span>Contributors:</span>
+      <ul>
+        <li th:each="contributor : ${singlePage.contributors}">
+          <a th:href="${contributor.permalink}" th:text="${contributor.displayName}">Contributor Name</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Post Stats -->
+    <div class="page-stats">
+      <span>Visits: <span th:text="${singlePage.stats.visit}"></span></span>
+      <span>Upvotes: <span th:text="${singlePage.stats.upvote}"></span></span>
+      <span>Comments: <span th:text="${singlePage.stats.comment}"></span></span>
+    </div>
+  </div>
+
+  <!-- Comments -->
+  <halo:comment
+    group="content.halo.run"
+    kind="SinglePage"
+    th:attr="name=${singlePage.metadata.name}"
+    colorScheme="document.documentElement.getAttribute('data-theme')"
+  />
+</th:block>
 </html>
