@@ -6,14 +6,14 @@
   <th:block th:fragment="content">
     <div class="content">
       <div class="post">
-        <h1 class="post-title">所有标签</h1>
+        <h1 class="post-title">All tags</h1>
         <ul>
           <li th:each="tag: ${tags}" class="tag-list">
             <a
               th:href="${tag.status.permalink}"
-              th:text="${tag.spec.displayName}+' ('+${tag.status.visiblePostCount}+' 篇文章)'"
+              th:text="${tag.spec.displayName}+' ('+${tag.status.visiblePostCount}+' articles)'"
             >
-              标签名 (n 篇文章)
+              Tag names (n articles)
             </a>
           </li>
         </ul>

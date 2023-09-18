@@ -1,0 +1,39 @@
+
+
+.moments-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.moment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.moment-title {
+  font-weight: bold;
+}
+
+.moment-author {
+  font-style: italic;
+  color: #888;
+}
+
+.moment-time {
+  font-size: 0.8em;
+  color: #aaa;
+}
+
+.moment-photo,
+.moment-video {
+  max-width: 100%;
+  margin-top: 15px;
+}
+
+.moment-divider {
+  border: 0;
+  height: 1px;
+  background-color: #ccc;
+  margin: 20px 0;
+}

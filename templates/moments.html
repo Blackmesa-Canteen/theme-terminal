@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: html(header = null, content = ~{::content}, footer = null)}"
+>
+  <th:block th:fragment="content">
+    <div class="moment">
+      <h1 class="moment-title" th:text="${singlePage.spec.title}">Moments</h1>
+      <div>
+        <ul class="moments-list">
+          <li th:each="moment : ${moments.items}" th:with="content=${moment.spec.content}">
+            <!-- Moment Title and Author Name -->
+            <div class="moment-header">
+              <h2 class="moment-title" th:text="${moment.metadata.name}"></h2>
+              <span class="moment-author" th:text="${moment.owner.name}"></span>
+              <span
+                class="moment-time"
+                th:text="${#dates.format(moment.metadata.creationTimestamp, 'MMM dd, YYYY hh:mm a')}"
+              ></span>
+            </div>
+
+            <!-- Moment Content -->
+            <div th:if="${not #strings.isEmpty(content.html)}" th:utext="${content.html}"></div>
+            <th:block th:if="${not #lists.isEmpty(content.medium)}" th:each="momentItem : ${content.medium}">
+              <img
+                th:if="${momentItem.type.name == 'PHOTO'}"
+                th:src="${momentItem.url}"
+                alt="Photo"
+                class="moment-photo"
+              />
+              <video th:if="${momentItem.type.name == 'VIDEO'}" th:src="${momentItem.url}" class="moment-video"></video>
+            </th:block>
+
+            <!-- Divider -->
+            <hr class="moment-divider" />
+          </li>
+        </ul>
+
+        <!-- Pagination -->
+        <div class="pagination" th:if="${moments.hasPrevious() || moments.hasNext()}">
+          <a th:href="@{${moments.prevUrl}}">
+            <span>Previous Page</span>
+          </a>
+          <span th:text="${moments.page}"></span>
+          <a th:href="@{${moments.nextUrl}}">
+            <span>Next Page</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</html>

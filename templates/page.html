@@ -16,5 +16,11 @@
         <div th:utext="${singlePage.content.content}">Post Content</div>
       </div>
     </div>
+    <halo:comment
+      group="content.halo.run"
+      kind="SinglePage"
+      th:attr="name=${singlePage.metadata.name}"
+      colorScheme="document.documentElement.getAttribute('data-theme')"
+    />
   </th:block>
 </html>

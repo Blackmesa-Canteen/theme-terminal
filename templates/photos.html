@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: html(header = null, content = ~{::content}, footer = null)}"
+>
+<th:block th:fragment="content">
+  <div class="post">
+    <h1 class="post-title">Photos</h1>
+
+    <div class="photo-container">
+      <!-- Display the photos -->
+      <ul class="photo-list">
+        <li th:each="photo : ${photos.items}">
+          <!-- Displaying the main photo -->
+          <div class="photo-item">
+            <img th:src="${photo.spec.url}" th:alt="${photo.spec.displayName}" class="photo-image">
+            <h3 th:text="${photo.spec.displayName}" class="photo-title"></h3>
+            <p th:text="${photo.spec.description}" class="photo-description"></p>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Pagination section -->
+      <div class="pagination">
+        <!-- Previous page link, only displayed if there's a previous page -->
+        <a th:if="${photos.hasPrevious}" th:href="@{${photos.prevUrl}}" class="pagination-link">Previous</a>
+
+        <!-- Display current page number -->
+        <span class="pagination-info" th:text="${photos.page + ' of ' + photos.totalPages}"></span>
+
+        <!-- Next page link, only displayed if there's a next page -->
+        <a th:if="${photos.hasNext}" th:href="@{${photos.nextUrl}}" class="pagination-link">Next</a>
+      </div>
+    </div>
+
+  </div>
+</th:block>
+</html>
