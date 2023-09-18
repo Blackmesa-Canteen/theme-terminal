@@ -11,7 +11,7 @@
 
       <!-- Author Details -->
       <div class="post-author">
-        <img th:src="${post.owner.avatar}" alt="Author Avatar" class="author-avatar"/>
+        <img th:src="${post.status.contributors[0].avatar}" alt="Author Avatar" class="author-avatar"/>
         <span th:text="${':: '+post.owner.displayName}">:: Author</span>
         <p th:text="${post.owner.bio}" class="author-bio">Author bio</p>
       </div>
